@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    unoptimized: true,
     domains: [
       "*",
       "assets.coingecko.com",
