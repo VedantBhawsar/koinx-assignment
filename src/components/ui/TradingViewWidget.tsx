@@ -71,10 +71,8 @@ function TradingViewWidget() {
       script.src = "https://s3.tradingview.com/tv.js";
       script.async = true;
       script.onload = () => {
-        // @ts-expect-error This will show the undefined
-        if (typeof TradingView !== "undefined" && containerRef.current) {
-          // @ts-expect-error This will show the undefined
-          new TradingView.widget({
+        if (typeof window.TradingView !== "undefined" && containerRef.current) {
+          new window.TradingView.widget({
             container_id: "tradingview_widget",
             symbol: `BITSTAMP:${symbol}`,
             interval: "D",
@@ -88,6 +86,8 @@ function TradingViewWidget() {
             save_image: false,
             height: "100%",
             width: "100%",
+            hide_side_toolbar: window.innerWidth < 768,
+            hide_volume: window.innerWidth < 480,
           });
         }
       };
@@ -95,7 +95,6 @@ function TradingViewWidget() {
       document.head.appendChild(script);
 
       return () => {
-        // Cleanup
         if (containerRef.current) {
           containerRef.current.innerHTML = "";
         }
@@ -109,31 +108,53 @@ function TradingViewWidget() {
     };
 
     loadTradingViewWidget();
+    
+    const handleResize = () => {
+      loadTradingViewWidget();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, [blockchainId]);
 
   const displayName = cryptoNameMap[blockchainId.toLowerCase()] || blockchainId;
 
   return (
-    <div className="w-full bg-white rounded-lg p-5 shadow-sm pb-16">
-      <div className="flex gap-3 items-center mb-4">
-        <Image
-          src={cryptoIcons[blockchainId]}
-          alt="logo"
-          height={24}
-          width={24}
-          className="rounded-full"
-        />
-        <h1 className="font-bold  text-xl capitalize">{displayName}</h1>
-      </div>
-      <div className="w-full min-h-[400px] h-[400px]">
-        <div
-          id="tradingview_widget"
-          ref={containerRef}
-          className="w-full h-full"
-        />
+    <div className="w-full bg-white rounded-lg shadow-sm overflow-hidden">
+      <div className="p-3 sm:p-4 lg:p-5">
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="relative w-6 h-6 sm:w-8 sm:h-8">
+            <Image
+              src={cryptoIcons[blockchainId]}
+              alt={`${displayName} logo`}
+              fill
+              className="rounded-full object-cover"
+              priority
+            />
+          </div>
+          <h1 className="font-bold text-lg sm:text-xl lg:text-2xl capitalize">
+            {displayName}
+          </h1>
+        </div>
+        
+        <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+          <div className="absolute top-0 left-0 w-full h-full">
+            <div
+              id="tradingview_widget"
+              ref={containerRef}
+              className="w-full h-full"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
+}
+
+declare global {
+  interface Window {
+    TradingView: any;
+  }
 }
 
 export default TradingViewWidget;

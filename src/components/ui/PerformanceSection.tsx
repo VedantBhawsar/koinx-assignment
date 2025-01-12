@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { motion } from "framer-motion";
 import { useParams } from "next/navigation";
+import { formatToUSD } from "@/lib/formatToUSD";
 
 interface Performance {
   market_data: {
@@ -48,7 +49,7 @@ const PerformanceSection = () => {
   }, [blockchainId]);
 
   if (!performance) {
-    return <>loading</>;
+    return <p>loading</p>;
   }
 
   return (
@@ -57,13 +58,10 @@ const PerformanceSection = () => {
       animate={{ opacity: 1, y: 0 }}
       className="p-6 bg-white rounded-lg shadow-sm max-w-full"
     >
-      {/* Performance Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Performance</h2>
         </div>
-
-        {/* Today's Range */}
         <div className="mb-6">
           <div className="flex justify-between text-sm mb-2">
             <div className="flex items-center gap-2">
@@ -83,7 +81,6 @@ const PerformanceSection = () => {
           <div className="text-center text-sm mt-1">$</div>
         </div>
 
-        {/* 52W Range */}
         <div>
           <div className="flex justify-between text-sm mb-2">
             <span>52W Low</span>
@@ -96,8 +93,6 @@ const PerformanceSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Fundamentals Section */}
       <div>
         <div className="flex items-center gap-2 mb-6">
           <h3 className="text-xl font-semibold">Fundamentals</h3>
@@ -193,14 +188,3 @@ const PerformanceSection = () => {
 };
 
 export default PerformanceSection;
-
-function formatToUSD(number: number) {
-  if (isNaN(number)) {
-    return "Invalid input";
-  }
-  return number.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    roundingMode: "trunc",
-  });
-}

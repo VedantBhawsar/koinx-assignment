@@ -1,4 +1,4 @@
-import BlockchainGrid from "@/components/ui /BlockchainGrid";
+import BlockchainGrid from "@/components/ui/BlockchainGrid";
 
 export default function Home() {
   return <BlockchainGrid />;

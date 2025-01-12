@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,12 +17,19 @@ const Header = () => {
 
   return (
     <nav className="w-full bg-white shadow-sm border-b  ">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-0">
+      <div className="max-w-7xl mx-auto px-6 lg:px-0">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 flex items-center">
-            <motion.div className="text-blue-600 font-bold text-xl">
-              <Link href={"/"}>KoinX</Link>
-            </motion.div>
+            <Link href={"/"}>
+              <Image
+                alt="logo"
+                src={"/logo.png"}
+                width={100}
+                height={100}
+                objectFit="contain"
+                className=""
+              />
+            </Link>
           </div>
 
           {/* Desktop Menu */}
