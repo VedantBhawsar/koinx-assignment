@@ -1,7 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import BlockchainCard from "./BlockchainCard";
 import { ITrendingCoin } from "./TrendingCoinsSection";
 

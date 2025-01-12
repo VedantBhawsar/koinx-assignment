@@ -1,14 +1,6 @@
 "use client";
-import AboutSection from "@/components/ui/AboutSection";
-import TradingViewWidget from "@/components/ui/TradingViewWidget";
-import PerformanceSection from "@/components/ui/PerformanceSection";
-import SubSectionTabs, { ActiveTabType } from "@/components/ui/SubSectionTabs";
-import GetStartedCard from "@/components/ui/GetStartedCard";
-import SentimentDashboard from "@/components/ui/SentimentDashboard";
-import TeamSection from "@/components/ui/TeamSection";
-import Tokenomics from "@/components/ui/Tokenomics";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React from "react";
 
 const TabContent = ({ children }: { children: React.ReactNode }) => (
   <motion.div

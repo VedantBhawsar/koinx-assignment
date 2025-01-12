@@ -1,12 +1,20 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
 import { motion } from "framer-motion";
-import Skeleton from "react-loading-skeleton";
 
 interface TokenDistribution {
   name: string;
   value: number;
   color: string;
+}
+
+interface RenderLabelProps {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
 }
 
 const Tokenomics = () => {
@@ -15,23 +23,6 @@ const Tokenomics = () => {
     { name: "Foundation", value: 20, color: "#FFA500" },
   ];
 
-  const CustomLegend = ({ payload }: any) => {
-    return (
-      <div className="space-y-4">
-        {payload.map((entry: any, index: number) => (
-          <div key={index} className="flex items-center gap-3">
-            <div
-              className="w-4 h-4 rounded-full"
-              style={{ backgroundColor: entry.color }}
-            />
-            <span className="text-gray-700">
-              {entry.value}: {distributionData[index].value}%
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   const renderCustomizedLabel = ({
     cx,
@@ -40,7 +31,7 @@ const Tokenomics = () => {
     innerRadius,
     outerRadius,
     percent,
-  }: any) => {
+  }: RenderLabelProps) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * (Math.PI / 180));
     const y = cy + radius * Math.sin(-midAngle * (Math.PI / 180));
@@ -99,7 +90,6 @@ const Tokenomics = () => {
                     ))}
                   </Pie>
                   <Legend
-                    content={<CustomLegend />}
                     layout="vertical"
                     verticalAlign="middle"
                     align="right"
@@ -112,19 +102,21 @@ const Tokenomics = () => {
               <div className="bg-blue-50 rounded-xl p-4 sm:p-6">
                 <h4 className="font-semibold mb-2">Distribution Details</h4>
                 <p className="text-sm text-gray-600">
-                  The initial token distribution was designed to ensure a fair and
-                  balanced allocation, with 80% allocated to crowdsale investors to
-                  promote decentralization, while 20% was reserved for the
-                  foundation to support ongoing development and ecosystem growth.
+                  The initial token distribution was designed to ensure a fair
+                  and balanced allocation, with 80% allocated to crowdsale
+                  investors to promote decentralization, while 20% was reserved
+                  for the foundation to support ongoing development and
+                  ecosystem growth.
                 </p>
               </div>
 
               <div className="bg-orange-50 rounded-xl p-4 sm:p-6">
                 <h4 className="font-semibold mb-2">Vesting Schedule</h4>
                 <p className="text-sm text-gray-600">
-                  Foundation tokens are subject to a 4-year vesting schedule with a
-                  1-year cliff, ensuring long-term alignment of interests.
-                  Crowdsale tokens were distributed immediately after the ICO.
+                  Foundation tokens are subject to a 4-year vesting schedule
+                  with a 1-year cliff, ensuring long-term alignment of
+                  interests. Crowdsale tokens were distributed immediately after
+                  the ICO.
                 </p>
               </div>
             </div>
@@ -137,16 +129,16 @@ const Tokenomics = () => {
           </h3>
           <div className="text-gray-600 space-y-4 text-sm sm:text-base leading-relaxed">
             <p>
-              Lorem ipsum dolor sit amet consectetur. Cras aliquet tristique ornare
-              vestibulum nunc dignissim vel consequat. Leo etiam nascetur bibendum
-              amet enim sit eget leo amet. At metus orci augue fusce eleifend
-              lectus eu fusce adipiscing.
+              Lorem ipsum dolor sit amet consectetur. Cras aliquet tristique
+              ornare vestibulum nunc dignissim vel consequat. Leo etiam nascetur
+              bibendum amet enim sit eget leo amet. At metus orci augue fusce
+              eleifend lectus eu fusce adipiscing.
             </p>
             <p>
               Volutpat ultrices nibh sodales massa habitasse urna felis augue.
-              Gravida aliquam fermentum augue eu. Imperdiet bibendum amet aliquam
-              donec. Eget justo dui metus odio rutrum. Vel ipsum eget in at
-              curabitur sem posuere facilisis vitae.
+              Gravida aliquam fermentum augue eu. Imperdiet bibendum amet
+              aliquam donec. Eget justo dui metus odio rutrum. Vel ipsum eget in
+              at curabitur sem posuere facilisis vitae.
             </p>
           </div>
         </div>

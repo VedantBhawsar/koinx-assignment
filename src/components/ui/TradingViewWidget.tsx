@@ -71,7 +71,9 @@ function TradingViewWidget() {
       script.src = "https://s3.tradingview.com/tv.js";
       script.async = true;
       script.onload = () => {
+        // @ts-expect-error This is error
         if (typeof window.TradingView !== "undefined" && containerRef.current) {
+          // @ts-expect-error This is error
           new window.TradingView.widget({
             container_id: "tradingview_widget",
             symbol: `BITSTAMP:${symbol}`,
@@ -108,13 +110,13 @@ function TradingViewWidget() {
     };
 
     loadTradingViewWidget();
-    
+
     const handleResize = () => {
       loadTradingViewWidget();
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [blockchainId]);
 
   const displayName = cryptoNameMap[blockchainId.toLowerCase()] || blockchainId;
@@ -136,7 +138,7 @@ function TradingViewWidget() {
             {displayName}
           </h1>
         </div>
-        
+
         <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
           <div className="absolute top-0 left-0 w-full h-full">
             <div
@@ -149,12 +151,6 @@ function TradingViewWidget() {
       </div>
     </div>
   );
-}
-
-declare global {
-  interface Window {
-    TradingView: any;
-  }
 }
 
 export default TradingViewWidget;
